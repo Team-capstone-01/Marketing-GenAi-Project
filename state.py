@@ -1,12 +1,12 @@
 from typing import TypedDict
 
 class CampaignState(TypedDict):
-    # User Input
     product: str
+    brand_name: str
+    brand_target: str
     audience: str
     tone: str
 
-    # AI Generated Output
     content: str
     keywords: str
     hashtags: str

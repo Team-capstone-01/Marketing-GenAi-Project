@@ -2,28 +2,25 @@ from LLM import generate_response
 
 def generate_content(state):
 
-    # Get user details
     product = state["product"]
+    brand_name = state["brand_name"]
+    brand_target = state["brand_target"]
     audience = state["audience"]
     tone = state["tone"]
 
     # Create prompt
     prompt = f"""
-You are an experienced digital marketing expert.
+You are a social media marketing expert.
 
-Create a professional LinkedIn post using the following details.
+Create an engaging LinkedIn campaign.
 
+Brand Name: {brand_name}
+Brand Target: {brand_target}
 Product: {product}
 Target Audience: {audience}
 Tone: {tone}
 
-Instructions:
-- Start with an attention-grabbing opening.
-- Explain the product benefits clearly.
-- Use a natural and human-like writing style.
-- Keep the post between 120 and 180 words.
-- End with a strong call-to-action.
-- Make it suitable for LinkedIn.
+Keep the content engaging, professional, and aligned with the brand's target market.
 """
 
     try:

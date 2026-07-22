@@ -10,6 +10,8 @@ app = FastAPI()
 # Request Model
 class CampaignRequest(BaseModel):
     product: str = Field(..., min_length=1)
+    brand_name: str = Field(..., min_length=1)
+    brand_target: str = Field(..., min_length=1)
     audience: str = Field(..., min_length=1)
     tone: str = Field(..., min_length=1)
 
@@ -21,16 +23,17 @@ def generate_campaign(data: CampaignRequest):
     try:
 
         campaign = {
-            "product": data.product,
-            "audience": data.audience,
-            "tone": data.tone,
-            "content": "",
-            "keywords": "",
-            "hashtags": "",
-            "image_prompt": "",
-            "final_content": ""
-        }
-
+    "product": data.product,
+    "brand_name": data.brand_name,
+    "brand_target": data.brand_target,
+    "audience": data.audience,
+    "tone": data.tone,
+    "content": "",
+    "keywords": "",
+    "hashtags": "",
+    "image_prompt": "",
+    "final_content": ""
+}
         # Run LangGraph Workflow
         result = graph_app.invoke(campaign)
 
