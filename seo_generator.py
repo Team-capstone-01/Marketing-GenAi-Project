@@ -1,35 +1,48 @@
-from LLM import llm
+from LLM import generate_response
 
 def generate_seo(state):
 
-    # Reading the content
+    # Read the generated LinkedIn content
     content = state["content"]
 
-    # Prompt for Gemini
+    # SEO Prompt
     prompt = f"""
-    You are an SEO expert.
+You are an SEO and Digital Marketing Expert.
 
-    Read the following marketing content and generate:
+Analyze the following LinkedIn marketing content and generate:
 
-    1. Five SEO keywords
-    2. Five suitable hashtags
+1. Exactly 5 SEO keywords.
+2. Exactly 5 relevant hashtags.
 
-    Content:
-    {content}
+Return the output in the following format only.
 
-    Give the output in this format:
+Keywords:
+keyword1, keyword2, keyword3, keyword4, keyword5
 
-    Keywords:
-    keyword1, keyword2, keyword3...
+Hashtags:
+#tag1 #tag2 #tag3 #tag4 #tag5
 
-    Hashtags:
-    #tag1 #tag2 #tag3...
-    """
+Content:
+{content}
+"""
 
-    #response from Gemini
-    result = llm.invoke(prompt)
+    try:
+        # Generate SEO response
+        response = generate_response(prompt)
 
-    # Saving SEO response
-    state["keywords"] = result.content
+        # Separate keywords and hashtags
+        parts = response.split("Hashtags:")
+
+        state["keywords"] = parts[0].replace("Keywords:", "").strip()
+
+        if len(parts) > 1:
+            state["hashtags"] = parts[1].strip()
+        else:
+            state["hashtags"] = ""
+
+    except Exception as e:
+        state["keywords"] = ""
+        state["hashtags"] = ""
+        print(f"SEO Generation Error: {e}")
 
     return state
